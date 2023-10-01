@@ -4,3 +4,9 @@ https://krpc.github.io/krpc/getting-started.html
 vcpkg安装
 https://blog.csdn.net/weixin_44210987/article/details/110198738
 
+推荐python镜像源
+https://pypi.tuna.tsinghua.edu.cn/simple
+
+百度云分享的其他文件
+链接：https://pan.baidu.com/s/18-VyVw2dW-oo54nASINhZw 
+提取码：7arw 
