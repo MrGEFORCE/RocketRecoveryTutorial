@@ -1,0 +1,6 @@
+krpc文档
+https://krpc.github.io/krpc/getting-started.html
+
+vcpkg安装
+https://blog.csdn.net/weixin_44210987/article/details/110198738
+
