@@ -102,7 +102,19 @@ while time_to_apoapsis() > 30:
     time.sleep(0.5)
 
 vessel.control.throttle = 1
-while vessel.flight(vessel.orbit.body.orbital_reference_frame).speed < 1500:
+'''
+    update
+    date: 20231005
+    author: MrGEFORCE
+    [English]In this starship launch script, here the surface speed before separation is an empirical
+    value that may not be effective under different ascent trajectories. We may improve it later.
+    The current code needs to be corrected based on the payload and actual ascent trajectory, 
+    and the given 1600 does not guarantee the landing trajectory of the booster will exactly fall
+    on the eastern continent.
+    [Chinese]在星舰的发射代码中，此处的分离前速度是一个经验值，在不同的上升轨迹下可能并不通用，之后可以想办法进行改进，
+    当前版本需要根据航天器的载荷和实际上升情况来确定，这个给定的1600并不能100%保证助推器的降落轨迹正好落在东边的大陆上。
+'''
+while vessel.flight(vessel.orbit.body.orbital_reference_frame).speed < 1600:
     time.sleep(0.02)
 
 time.sleep(0.5)

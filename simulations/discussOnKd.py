@@ -13,7 +13,7 @@ m_array = np.ndarray([iterations, simu_steps], dtype=float)
 dt = 0.05  # s
 g = 9.82  # m/s^2
 max_thrust = 1e5  # N, twr max = 2
-alpha = -0.02e3  # if max thrust, rate = . t/s
+alpha = -0.2e3  # if max thrust, rate = . t/s
 target = 1000
 
 for turns in range(iterations):
@@ -21,13 +21,13 @@ for turns in range(iterations):
                      differential_on_measurement=False)
     controller.reset()
 
-    mass = 5e3 + 1  # unit:t
+    mass = 5e3 + 1  # unit:kg
     h = 0
     v = 0
     for i in range(simu_steps):
         ctrl = controller(h, dt)
         F = max_thrust * ctrl - mass * g
-        mass += alpha * ctrl
+        mass += alpha * ctrl * dt
         acc = F / mass
         v += acc * dt
         h += v * dt

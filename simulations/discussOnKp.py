@@ -13,7 +13,7 @@ m_array = np.ndarray([iterations, simu_steps], dtype=float)
 dt = 0.05  # s
 g = 9.82  # m/s^2
 max_thrust = 1e5  # N, twr max = 2
-alpha = -0.02e3  # if max thrust, rate = . t/s
+alpha = -0.2e3  # if max thrust, rate = . t/s
 target = 1000
 
 for turns in range(iterations):
@@ -27,7 +27,19 @@ for turns in range(iterations):
     for i in range(simu_steps):
         ctrl = controller(h, dt)
         F = max_thrust * ctrl - mass * g
-        mass += alpha * ctrl
+        '''
+            update
+            date: 20231005
+            author: MrGEFORCE
+            [English]Remember to plus dt when updates the mass. I forgot this in the old version, and only
+            the code for the descent model was correct.
+            The defined alpha is the fuel consumed in 1 second, of course it needs to be multiplied by dt.
+            The discussion of ki and kd, as well as the simulation of white noise, have also been changed,
+            only here gives the comments to explain these changes.
+            [Chinese]质量的更新记得带上dt，之前忘了，原本只有下降模型的代码是正确的。
+            因为定义的alpha是一秒消耗的燃料，所以当然要乘上dt。对ki和kd的讨论以及白噪声的仿真都改了，但注释仅在此处提示一下。
+        '''
+        mass += alpha * ctrl * dt
         acc = F / mass
         v += acc * dt
         h += v * dt

@@ -2,7 +2,7 @@ import numpy as np
 from simple_pid import PID
 import matplotlib.pyplot as plt
 
-# kp的探讨
+# 白噪声对kd的影响
 iterations = 2
 simu_steps = 2000
 h_array = np.ndarray([iterations, simu_steps], dtype=float)
@@ -13,19 +13,19 @@ m_array = np.ndarray([iterations, simu_steps], dtype=float)
 dt = 0.05  # s
 g = 9.82  # m/s^2
 max_thrust = 1e5  # N, twr max = 2
-alpha = -0.02e3  # if max thrust, rate = . t/s
+alpha = -0.2e3  # if max thrust, rate = . t/s
 target = 1000
 
 controller = PID(Kp=0.05, Ki=0.0001, Kd=0.2, setpoint=target, output_limits=(0, 1), differential_on_measurement=False)
 for turns in range(iterations):
     controller.reset()
-    mass = 5e3 + 1  # unit:t
+    mass = 5e3 + 1  # unit:kg
     h = 0
     v = 0
     for i in range(simu_steps):
         ctrl = controller(h, dt)
         F = max_thrust * ctrl - mass * g
-        mass += alpha * ctrl
+        mass += alpha * ctrl * dt
         acc = F / mass
         v += acc * dt
         h += v * dt
