@@ -13,6 +13,9 @@ https://pypi.tuna.tsinghua.edu.cn/simple
 松鼠大佬传授krpc参考系
 https://www.bilibili.com/read/cv9657892/
 
+linux上的protobuf安装教程（注意视频里提到的，prefix指令不要加）
+https://blog.csdn.net/yahohi/article/details/108310609
+
 Q群
 krpc交流群 973630278
 Mr.G INDUSTRIAL 470568345 验证消息：Mr_GEFORCE的生涯存档中，公司名字叫Mr.G INDUSTRIAL，和群名一致
