@@ -1,0 +1,18 @@
+cmake_minimum_required(VERSION 3.15)
+project(multi)
+set(CMAKE_CXX_STANDARD 17)
+
+include_directories(
+        path/to/install/directory/include
+)
+
+find_package(Protobuf CONFIG REQUIRED)
+
+file(GLOB SRC "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp")
+
+add_executable(multi ${SRC})
+
+target_link_libraries(multi PRIVATE
+        path/to/install/directory/lib/krpcd.lib
+        protobuf::libprotobuf
+)
