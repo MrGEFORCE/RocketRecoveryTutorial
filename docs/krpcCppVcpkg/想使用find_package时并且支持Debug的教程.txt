@@ -1,0 +1,48 @@
+由于官方的install并不支持find_package，因此用起来非常不方便，需要自己指定include目录和链接lib，
+于是对官方的CMakeLists.txt魔改，使用户使用更加方便
+
+使用方法：
+首先到https://github.com/krpc/krpc/releases上下载krpc的C++版本
+这里用的是0.5.4版本，解压后命令行进入此目录
+
+直接使用提供的CMakeLists_modified.txt(非0.5.4版本需要更改)或想自己改可根据魔改细节的步骤更改原版CMakeLists.txt，
+将MykrpcConfig.cmake.in复制到下载的krpc目录中，
+执行
+cmake -DCMAKE_TOOLCHAIN_FILE=path/to/vcpkg.cmake -Bbuild -DCMAKE_INSTALL_PREFIX=path/to/install/directory
+cmake --build build --config Release
+cmake --build build --config Debug
+cmake --install build --config Release
+cmake --install build --config Debug
+最后手动把编译输出目录build/Debug目录下的pdb文件复制到安装目录中的lib目录下
+想删除安装的krpc直接删除安装目录即可
+
+使用时，需在CMakeLists.txt中把安装目录下的cmake目录添加在CMAKE_PREFIX_PATH变量后面让cmake能找到库
+然后要找Mykrpc和protobuf两个库，无所谓先后顺序
+可参考CMakeLists_with_find_package.txt中的写法
+
+set(CMAKE_PREFIX_PATH "${CMAKE_PREFIX_PATH};path/to/install/directory/cmake")
+
+find_package(Mykrpc REQUIRED)
+find_package(protobuf CONFIG REQUIRED)
+
+target_link_libraries(main PRIVATE Mykrpc::krpc protobuf::libprotobuf)
+
+源文件中不要包含Windows.h头文件，windows的头文件如果和库头文件包含顺序不同很容易出莫名奇妙的问题，如果要用Sleep函数可改成std::this_thread::sleep_for()
+
+魔改细节（可查看文件中的注释）：
+
+修改其中的CMakeLists.txt
+原版中指定了CMAKE_BUILD_TYPE "Release"，因此为了支持Debug将其删除，并在其后加上set(CMAKE_DEBUG_POSTFIX "d")指定Debug编译的后缀
+另外，原版中指定了protobuf用静态链接，而vcpkg中是动态链接的，会报错，因此将此处判断的代码注释了
+
+把所有target_link_libraries都加了PUBLIC属性，不然会报错，并把原版${PROTOBUF_LIBRARIES}改成了protobuf::libprotobuf，
+另外原版这里有个z库，好像是zlib？我将其删除后可编译，加上时无法编译，于是删除
+
+最后是安装方面的事
+添加了target_include_directories(krpc INTERFACE ${CMAKE_INSTALL_PREFIX}/include)
+这里参数INTERFACE使其他使用krpc的库能使用头文件，而krpc自身并不使用这些头文件
+
+然后设置安装的包的名字set(MyInstallName "Mykrpc")，为了和原版不同因此取Mykrpc，
+并在krpc目标的install中设置EXPORT ${MyInstallName}Targets
+
+最后面那部分就是导出供find_package使用的一些文件，其中使用了添加进来的MykrpcConfig.cmake.in用于让使用方能读取关于krpc库的编译信息

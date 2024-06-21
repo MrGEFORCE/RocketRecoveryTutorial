@@ -1,0 +1,13 @@
+CMakeLists.txt和原版比基本没修改
+把静态链接那里注释了，并删除了z库，添加了Debug库的后缀d。使用这个方案只支持Debug编译
+
+可自己修改源码中的CMakeLists.txt或使用提供的CMakeLists_modified_no_find_package_only_build.txt
+在链接时使用方法可参考CMakeLists_without_find_package.txt中的写法
+
+修改源码的CMakeLists.txt后
+执行
+cmake -DCMAKE_TOOLCHAIN_FILE=path/to/vcpkg.cmake -Bbuild -DCMAKE_INSTALL_PREFIX=path/to/install/directory
+cmake --build build --config Debug
+cmake --install build --config Debug
+最后手动把编译输出目录build/Debug目录下的pdb文件复制到安装目录中的lib目录下
+想删除安装的krpc直接删除安装目录即可
