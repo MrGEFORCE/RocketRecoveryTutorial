@@ -14,6 +14,10 @@ The nominal capacity of B1040.7 is 63t, and even if the payload is too light, it
 
 Upload code for multi-target control. Video link: https://www.bilibili.com/video/BV1294y137kt/
 
+### 20250202 Supplementary explanation：
+
+Add the code for the quadcopter vector aircraft and check the readme in the pacifier folder for details.
+
 
 Mr_GEFORCE的可回收火箭教程相关文件。
 
@@ -28,3 +32,7 @@ B1040.7的标称运力是63t，载荷太轻也不行，因为轨道会变化从�
 ### 20231111补充：
 
 上传多目标控制的代码，视频链接：https://www.bilibili.com/video/BV1294y137kt/
+
+### 20250202补充：
+
+加入四轴矢量飞行器代码，具体去pacifier文件夹看readme。

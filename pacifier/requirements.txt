@@ -1,0 +1,9 @@
+PySide6
+pyqtgraph
+pyopengl
+
+krpc
+protobuf
+
+numpy
+simple_pid

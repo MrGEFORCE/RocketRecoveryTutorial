@@ -1,3 +1,6 @@
+__pycache__
+.idea
+*.pyproject.user
 krpcMultiRocket_cpp/.idea
 krpcMultiRocket_cpp/cmake-build-debug
 krpcMultiRocket_cpp_python_failed/.idea
